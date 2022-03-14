@@ -19,12 +19,14 @@ scriptpath=`dirname $script`
 
 # Parse arguments from flags
 args=""
-while getopts s:l:d: flag
+key=""
+while getopts s:l:d:k: flag
 do
     case "${flag}" in
           s) args+=" --suite ${OPTARG}";;
           l) args+=" --loglevel ${OPTARG}";;
           d) args+=" --log ${OPTARG}/log.html --report ${OPTARG}/report.html";;
+          k) key=${OPTARG}
     esac
 done
 
@@ -32,7 +34,7 @@ done
 pip install --quiet -r $scriptpath/../requirements-test.txt
 
 # Launch python scripts to setup terraform environment
-python3 -m robot --variable vaultdatabase:$scriptpath/../../vault/database.kdbx   \
-                 --variable vaultkey:$scriptpath/../../vault/database.key         \
-                 $args                                                                      \
+python3 -m robot --variable vaultdatabase:$scriptpath/../../vault/cicd.kdbx \
+                 --variable vault_key_env:$key                              \
+                 $args                                                      \
                  $scriptpath/../test/cases
