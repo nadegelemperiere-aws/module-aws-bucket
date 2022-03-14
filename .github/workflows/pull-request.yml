@@ -61,7 +61,7 @@ jobs:
                 path: vault
                 ref: v1.0.0
                 token: ${{ secrets.GH_ACCESS_TOKEN }}
-
+                
             - name: Launching tests
               continue-on-error: true
               env:

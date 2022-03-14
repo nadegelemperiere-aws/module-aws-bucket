@@ -68,6 +68,7 @@ def load_multiple_test_data(buckets, logging, region) :
             'Expiration' : {'Days' : 90}})
 
         bucket['Policy'] = {"Version":"2012-10-17","Statement":[{"Sid":"AllowRootAndServicePrincipal","Effect":"Allow","Principal":{"AWS":["arn:aws:iam::833168553325:user/principal","arn:aws:iam::833168553325:root"]},"Action":"s3:*","Resource":["arn:aws:s3:::test-test-eu-west-1-test-" + str(i) + "/*","arn:aws:s3:::test-test-eu-west-1-test-" + str(i)]},{"Sid": "AllowSSLRequestsOnly", "Effect": "Deny", "Principal": "*", "Action": "s3:*", "Resource": ["arn:aws:s3:::test-test-eu-west-1-test-" + str(i) + "/*", "arn:aws:s3:::test-test-eu-west-1-test-" + str(i)], "Condition": {"Bool": {"aws:SecureTransport": "false"}}}]}
+
         if i == 5 :
             bucket['Policy']['Statement'].append({"Sid":"AllowLoggingService","Effect":"Allow","Principal":{"Service":"delivery.logs.amazonaws.com"},"Action":"s3:PutObject","Resource":"arn:aws:s3:::test-test-eu-west-1-test-5/*"})
 
