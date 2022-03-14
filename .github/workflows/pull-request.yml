@@ -1,0 +1,71 @@
+# -------------------------------------------------------
+# TECHNOGIX
+# -------------------------------------------------------
+# Copyright (c) [2022] Technogix SARL
+# All rights reserved
+# -------------------------------------------------------
+# Pull request pipeline for module
+# -------------------------------------------------------
+# Nadège LEMPERIERE, @01 march 2022
+# Latest revision: 01 march 2022
+# -------------------------------------------------------
+
+name: Module Pull Request Pipeline
+
+on:
+    pull_request:
+        types: [ assigned, opened, synchronize, reopened ]
+
+jobs:
+
+    check:
+        name: Build Module
+        runs-on: ubuntu-latest
+        container: node:alpine
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@master
+
+            - name: Linting code
+              uses: docker://technogix/terraform-python-awscli:v2.0.0
+              with:
+                args: ./scripts/lint.sh
+
+            - name: Run Snyk to check for vulnerabilities
+              uses: snyk/actions/iac@master
+              env:
+                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              with:
+                args: --sarif-file-output=snyk.sarif
+
+            - name: Upload result to GitHub Code Scanning
+              uses: github/codeql-action/upload-sarif@v1
+              if: always()
+              with:
+                sarif_file: snyk.sarif
+
+    test:
+        name: Testing Module
+        runs-on: ubuntu-latest
+        needs: [check]
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@master
+              with:
+                path: module
+
+            - name: Retrieving vault
+              uses: actions/checkout@master
+              with:
+                repository: technogix/vault
+                path: vault
+                ref: v1.0.0
+                token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+            - name: Retrieving vault key
+              run: printf '%s\n' '${{ secrets.VAULT_KEY }}' > vault/database.key
+
+            - name: Launching tests
+              uses: docker://technogix/terraform-python-awscli:v2.0.0
+              with:
+                args: ./module/scripts/robot.sh -l DEBUG -d tests
