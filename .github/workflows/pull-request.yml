@@ -62,10 +62,10 @@ jobs:
                 ref: v1.0.0
                 token: ${{ secrets.GH_ACCESS_TOKEN }}
 
-            - name: Retrieving vault key
-              run: printf '%s\n' '${{ secrets.VAULT_KEY }}' > vault/database.key
-
             - name: Launching tests
+              continue-on-error: true
+              env:
+                VAULT_KEY: ${{ secrets.VAULT_KEY }}
               uses: docker://technogix/terraform-python-awscli:v2.0.0
               with:
-                args: ./module/scripts/robot.sh -l DEBUG -d tests
+                args: ./module/scripts/robot.sh -l WARN -d tests -k VAULT_KEY

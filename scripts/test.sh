@@ -21,6 +21,7 @@ scriptpath=`dirname $script`
 docker run  -it --rm \
             --volume $scriptpath/../:/home/technogix/module:rw \
             --volume $scriptpath/../../vault/:/home/technogix/vault \
+            --env VAULT_KEY=$VAULT_KEY \
             --workdir /home/technogix/module \
             technogix/terraform-python-awscli:v2.0.0 \
-            ./scripts/robot.sh $@
+            ./scripts/robot.sh -k VAULT_KEY $@
