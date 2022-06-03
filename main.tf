@@ -224,7 +224,7 @@ locals {
 		{
 			Sid 		 = "DenyUnEncryptedObjectUploads"
 			Effect 		 = "Deny"
-			Action 		 = "s3:*"
+			Action 		 = "s3:PutObject"
             NotPrincipal = {
 				"Service" : [ "cloudtrail.amazonaws.com", "delivery.logs.amazonaws.com", "s3.amazonaws.com", "config.amazonaws.com"]
 			}
