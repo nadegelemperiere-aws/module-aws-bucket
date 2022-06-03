@@ -23,5 +23,5 @@ docker run  -it --rm \
             --volume $scriptpath/../../vault/:/home/technogix/vault \
             --env VAULT_KEY=$VAULT_KEY \
             --workdir /home/technogix/module \
-            technogix/terraform-python-awscli:v2.0.0 \
+            technogix/terraform-python-awscli:v2.1.0 \
             ./scripts/robot.sh -k VAULT_KEY $@

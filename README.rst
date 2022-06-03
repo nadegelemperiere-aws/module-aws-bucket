@@ -17,10 +17,10 @@ This project contains all the infrastructure as code (IaC) to deploy a s3 bucket
    :target: ./LICENSE
    :alt: License
 .. image:: https://badgen.net/github/commits/technogix-terraform/module-aws-bucket/main
-   :target: https://github.com/technogix-terraform/robotframework
+   :target: https://github.com/technogix-terraform/module-aws-bucket
    :alt: Commits
 .. image:: https://badgen.net/github/last-commit/technogix-terraform/module-aws-bucket/main
-   :target: https://github.com/technogix-terraform/robotframework
+   :target: https://github.com/technogix-terraform/module-aws-bucket
    :alt: Last commit
 
 Built With
@@ -126,6 +126,8 @@ Bucket policy enables by default :
 
 * The IAM user used to perform infrastructure deployment
 
+It also forces object to be encrypted before being put into the bucket
+
 to get full access to the repository, so that it can be fully managed by terraform. Additional rights are provided through module configuration
 
 Testing
@@ -134,16 +136,16 @@ Testing
 Tested With
 -----------
 
-.. image:: https://img.shields.io/static/v1?label=technogix_iac_keywords&message=v1.0.0&color=informational
+.. image:: https://img.shields.io/static/v1?label=technogix_iac_keywords&message=v1.4.0&color=informational
    :target: https://github.com/technogix-terraform/robotframework
    :alt: Technogix iac keywords
-.. image:: https://img.shields.io/static/v1?label=python&message=3.10.2&color=informational
+.. image:: https://img.shields.io/static/v1?label=python&message=3.10.5&color=informational
    :target: https://www.python.org
    :alt: Python
-.. image:: https://img.shields.io/static/v1?label=robotframework&message=4.1.3&color=informational
+.. image:: https://img.shields.io/static/v1?label=robotframework&message=5.0.1&color=informational
    :target: http://robotframework.org/
    :alt: Robotframework
-.. image:: https://img.shields.io/static/v1?label=boto3&message=1.21.7&color=informational
+.. image:: https://img.shields.io/static/v1?label=boto3&message=1.24.1&color=informational
    :target: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
    :alt: Boto3
 
@@ -217,7 +219,7 @@ This code is under MIT License.
 Contact
 =======
 
-Nadege LEMPERIERE - nadege.lemperiere@technogix.io
+Technogix - contact.technogix@gmail.com
 
 Project Link: `https://github.com/technogix-terraform/module-aws-bucket`_
 

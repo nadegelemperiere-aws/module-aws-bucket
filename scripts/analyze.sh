@@ -21,5 +21,5 @@ scriptpath=`dirname $script`
 docker run  -it --rm \
             --volume $scriptpath/../:/home/technogix/module:rw \
             --workdir /home/technogix/module \
-            technogix/terraform-python-awscli:v2.0.0 \
+            technogix/terraform-python-awscli:v2.1.0 \
             ./scripts/lint.sh $@

@@ -27,7 +27,7 @@ jobs:
               uses: actions/checkout@master
 
             - name: Linting code
-              uses: docker://technogix/terraform-python-awscli:v2.0.0
+              uses: docker://technogix/terraform-python-awscli:v2.1.0
               with:
                 args: ./scripts/lint.sh
 
@@ -61,11 +61,10 @@ jobs:
                 path: vault
                 ref: v1.0.0
                 token: ${{ secrets.GH_ACCESS_TOKEN }}
-                
+
             - name: Launching tests
-              continue-on-error: true
               env:
                 VAULT_KEY: ${{ secrets.VAULT_KEY }}
-              uses: docker://technogix/terraform-python-awscli:v2.0.0
+              uses: docker://technogix/terraform-python-awscli:v2.1.0
               with:
                 args: ./module/scripts/robot.sh -l WARN -d tests -k VAULT_KEY

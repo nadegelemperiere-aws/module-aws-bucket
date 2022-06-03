@@ -218,6 +218,16 @@ locals {
             Condition   = {
                 "Bool" : { "aws:SecureTransport": "false" }
             }
+		},
+		{
+			Sid 		= "DenyUnEncryptedObjectUploads"
+			Effect 		= "Deny"
+			Action 		= "s3:*"
+            Principal   = "*"
+			Resource 	= ["${aws_s3_bucket.bucket.arn}/*"]
+            Condition   = {
+                "Null":{ "s3:x-amz-server-side-encryption":"true" }
+            }
 		}
 	])
 }
