@@ -210,22 +210,26 @@ locals {
 			Resource 	= ["${aws_s3_bucket.bucket.arn}/*","${aws_s3_bucket.bucket.arn}"]
 		},
         {
-			Sid 		= "AllowSSLRequestsOnly"
-			Effect 		= "Deny"
-			Action 		= "s3:*"
-            Principal   = "*"
-			Resource 	= ["${aws_s3_bucket.bucket.arn}/*","${aws_s3_bucket.bucket.arn}"]
-            Condition   = {
+			Sid 		 = "AllowSSLRequestsOnly"
+			Effect 		 = "Deny"
+			Action 		 = "s3:*"
+            NotPrincipal = {
+				"Service" : [ "cloudtrail.amazonaws.com", "delivery.logs.amazonaws.com", "s3.amazonaws.com", "config.amazonaws.com"]
+			}
+			Resource 	 = ["${aws_s3_bucket.bucket.arn}/*","${aws_s3_bucket.bucket.arn}"]
+            Condition    = {
                 "Bool" : { "aws:SecureTransport": "false" }
             }
 		},
 		{
-			Sid 		= "DenyUnEncryptedObjectUploads"
-			Effect 		= "Deny"
-			Action 		= "s3:*"
-            Principal   = "*"
-			Resource 	= ["${aws_s3_bucket.bucket.arn}/*"]
-            Condition   = {
+			Sid 		 = "DenyUnEncryptedObjectUploads"
+			Effect 		 = "Deny"
+			Action 		 = "s3:*"
+            NotPrincipal = {
+				"Service" : [ "cloudtrail.amazonaws.com", "delivery.logs.amazonaws.com", "s3.amazonaws.com", "config.amazonaws.com"]
+			}
+			Resource 	 = ["${aws_s3_bucket.bucket.arn}/*"]
+            Condition    = {
                 "Null":{ "s3:x-amz-server-side-encryption":"true" }
             }
 		}
