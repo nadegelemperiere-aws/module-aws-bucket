@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="Robot Framework 4.1.3 (Python 3.10.2 on linux)" name="Generator">
+<meta content="Robot Framework 5.0.1 (Python 3.10.4 on linux)" name="Generator">
 <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAqAAAAAAAAAAAAAAAAAAAALIAAAD/AAAA4AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA4AAAAP8AAACxAAAAAAAAAKYAAAD/AAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAA/wAAAKkAAAD6AAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD/AAAA+gAAAMMAAAAAAAAAAgAAAGsAAABrAAAAawAAAGsAAABrAAAAawAAAGsAAABrAAAADAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAIsAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAFAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAADwAAAB8AAAAAAAAAGAAAABcAAAAAAAAAH8AAABKAAAAAAAAAAAAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAADCAAAA/wAAACkAAADqAAAA4QAAAAAAAAD7AAAA/wAAALAAAAAGAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAIwAAAP4AAAD/AAAA/wAAAGAAAAAAAAAAAAAAAMkAAAD/AAAAigAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAAAAAAAIAAAAcAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAA2gAAAP8AAAD7AAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAD/AAAAqwAAAP8AAACvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIAAAD/AAAAsgAAAAAAAAC5AAAA/wAAAMoAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMkAAAD/AAAAvAAAAAAAAAAAAAAAAAAAAKwAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArQAAAAAAAAAAwAMAAIABAAAf+AAAP/wAAD/8AAAgBAAAP/wAAD/8AAA//AAAJIwAADHEAAA//AAAP/wAAB/4AACAAQAAwAMAAA==">
 <style media="all" type="text/css">
 /* Generic and misc styles */
@@ -318,6 +318,9 @@ th.stats-col-graph:hover {
     top: 0;
     padding: 3px;
     cursor: default;
+}
+.element-header .label {
+    margin-right: 0.5em;
 }
 .name {
     font-weight: bold;
@@ -966,6 +969,7 @@ window.model = (function () {
     }
     function Keyword(data) {
         var kw = createModelObject(data);
+        var flatTypes = ['RETURN', 'BREAK', 'CONTINUE'];
         kw.libname = data.libname;
         kw.fullName = (kw.libname ? kw.libname + '.' : '') + kw.name;
         kw.type = data.type;
@@ -1350,8 +1354,8 @@ window.testdata = function () {
     var _statistics = null;
     var LEVELS = ['TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FAIL', 'SKIP'];
     var STATUSES = ['FAIL', 'PASS', 'SKIP', 'NOT RUN'];
-    var KEYWORD_TYPES = ['KEYWORD', 'SETUP', 'TEARDOWN', 'FOR', 'VAR', 'IF', 'ELSE IF', 'ELSE'];
-    var MESSAGE_TYPE = 8;
+    var KEYWORD_TYPES = ['KEYWORD', 'SETUP', 'TEARDOWN', 'FOR', 'ITERATION', 'IF', 'ELSE IF', 'ELSE', 'RETURN',
+                         'TRY', 'EXCEPT', 'FINALLY', 'WHILE', 'CONTINUE', 'BREAK'];
     function addElement(elem) {
         if (!elem.id)
             elem.id = uniqueId();
@@ -1372,10 +1376,10 @@ window.testdata = function () {
                 elapsed];
     }
     function createMessage(element, strings) {
-        return model.Message(LEVELS[element[2]],
-                             util.timestamp(element[1]),
-                             strings.get(element[3]),
-                             strings.get(element[4]));
+        return model.Message(LEVELS[element[1]],
+                             util.timestamp(element[0]),
+                             strings.get(element[2]),
+                             strings.get(element[3]));
     }
     function parseStatus(stats) {
         return STATUSES[stats[0]];
@@ -1386,7 +1390,7 @@ window.testdata = function () {
         };
     }
     function createBodyItem(parent, element, strings, index) {
-        if (element[0] == MESSAGE_TYPE)
+        if (element.length < 5)
             return createMessage(element, strings);
         var messages = util.filter(parent.children(), function (child) {
             return child.type == 'message';
@@ -1799,7 +1803,7 @@ function stopPropagation(event) {
 window.output = {};
 </script>
 <script type="text/javascript">
-window.output["suite"] = [1,2,3,0,[],[1,0,83410],[[4,5,6,7,[],[1,18,83391],[],[[8,0,9,[],[1,243,713],[[0,10,11,0,12,13,14,0,[1,244,0],[]],[0,15,16,0,17,18,19,0,[1,244,157],[]],[0,15,16,0,17,20,21,0,[1,401,148],[]],[0,15,16,0,17,22,23,0,[1,549,147],[]],[0,15,16,0,17,24,25,0,[1,696,151],[]],[0,26,27,0,28,29,0,0,[1,847,0],[]],[0,30,31,0,32,33,0,0,[1,848,106],[]],[0,34,35,0,36,37,38,0,[1,954,1],[]],[0,39,35,0,40,38,0,0,[1,955,0],[]],[0,39,35,0,40,25,0,0,[1,955,1],[]]]],[41,0,42,[],[1,956,82452],[[0,43,27,0,44,45,0,0,[1,956,50421],[]],[0,46,27,0,47,48,49,0,[1,51377,3],[]],[0,50,51,0,0,52,53,0,[1,51380,2],[]],[0,54,31,0,55,56,0,0,[1,51382,9096],[]],[2,57,27,0,58,45,0,0,[1,60478,22930],[]]]]],[],[2,2,0,0]]],[],[],[2,2,0,0]];
+window.output["suite"] = [1,2,3,0,[],[1,0,87431],[[4,5,6,7,[],[1,16,87414],[],[[8,0,9,[],[1,223,628],[[0,10,11,0,12,13,14,0,[1,224,0],[]],[0,15,16,0,17,18,19,0,[1,224,137],[]],[0,15,16,0,17,20,21,0,[1,361,131],[]],[0,15,16,0,17,22,23,0,[1,492,130],[]],[0,15,16,0,17,24,25,0,[1,623,128],[]],[0,26,27,0,28,29,0,0,[1,752,0],[]],[0,30,31,0,32,33,0,0,[1,752,97],[]],[0,34,35,0,36,37,38,0,[1,849,1],[]],[0,39,35,0,40,38,0,0,[1,850,0],[]],[0,39,35,0,40,25,0,0,[1,850,1],[]]]],[41,0,42,[],[1,851,86578],[[0,43,27,0,44,45,0,0,[1,852,48921],[]],[0,46,27,0,47,48,49,0,[1,49773,3],[]],[0,50,51,0,0,52,53,0,[1,49777,1],[]],[0,54,31,0,55,56,0,0,[1,49778,14529],[]],[2,57,27,0,58,45,0,0,[1,64307,23122],[]]]]],[],[2,2,0,0]]],[],[],[2,2,0,0]];
 </script>
 <script type="text/javascript">
 window.output["strings"] = [];
@@ -1808,16 +1812,16 @@ window.output["strings"] = [];
 window.output["strings"] = window.output["strings"].concat(["*","*Cases","*/github/workspace/module/test/cases","*../module/test/cases","*Scenarii","*/github/workspace/module/test/cases/scenarii.robot","*../module/test/cases/scenarii.robot","*<p>A test case to check multiple subnets creation using module\x3c/p>","*Prepare environment","*<p>Retrieve god credential from database and initialize python tests keywords\x3c/p>","*Get Environment Variable","*OperatingSystem","*<p>Returns the value of an environment variable with the given name.\x3c/p>","*${KEEPASS_KEY_ENV}","*${vault_key}","*Load Keepass Database Secret","*technogix_iac_keywords.keepass","eNplkMsKgzAQRff9ilk1CgX3rfUjui1djDq2QWNkMgr5+0aDj9JZBOYy51xIPhQPEtY0ESA4qpgEGrYmbC3RgM5BjYIlOsqzoTjlHw7PUKwhQOKEU7j+nUOjOwKxwGvBhN1I0d6Shzg77iMRHLbSKFTP8GajXtj/EDE5FizqjUgaywYFnsp4dVHLuXrB/fyWG2TGZ0uSAkrAy1FoM+/J0a77WDn/wxftTmqN","*${KEEPASS_DATABASE}, ${vault_key}, ${KEEPASS_PRINCIPAL_KEY_ENTRY}, username","*${principal_access}","*${KEEPASS_DATABASE}, ${vault_key}, ${KEEPASS_PRINCIPAL_KEY_ENTRY}, password","*${principal_secret}","*${KEEPASS_DATABASE}, ${vault_key}, ${KEEPASS_PRINCIPAL_USERNAME}, username","*${principal_name}","*${KEEPASS_DATABASE}, ${vault_key}, ${KEEPASS_ACCOUNT_ENTRY}, password","*${ACCOUNT}","*Initialize Terraform","*technogix_iac_keywords.terraform","eNp9j7FuwzAMRPd+xY3tlL0wDGTMEKSAh46FKtMxUUEUSDpG+/WVnRjJFA6CcNK9OzalPWR2Don/CD/0O4v2mNlH7D87RMkDnycNzpLxoTJwIogixEhmX9WwM4pKvlxhY0gJ34SicuGe+mZX2pdm1HqUttzsdV7N9Q3v14zE2J6Giu66EyYjNYTJR8rO8RrPGWG2h+g7ZpWW+ivhsD8+JTw03gjdKq2EYCaRg1MPF1R/bUcXlmmLXn4ti/0DvXJwRw==","*${REGION}, ${principal_access}, ${principal_secret}","*Initialize S3","*technogix_iac_keywords.s3","eNp9jzGPwjAMhff7FR6PiR1VlRgZEEgdbkQhdalFFEe22wp+PWmgAt1Ahih6zvvec5XqXSQjF+iOcMXbxNLCRNbD9q8Bz7GjyyDOiCMchTsKCCzgvEfVUzasFb2gzU/Q3oUAZ4QkPFKLbbVO9U/VS75SnV72fH7VZAWbZ0YgWEZdRjfNAQZFUXCD9RiN/DOeIrhJP6LfmCLN9Qtht91/JXw0XghNkQrBqbInZ9iCMWR/bocj8bBEl1+Cl5n4f5mXnI25wLz9A8sVe64=","*None, ${principal_access}, ${principal_secret}, ${REGION}","*Create Dictionary","*BuiltIn","*<p>Creates and returns a dictionary based on the given <code>items\x3c/code>.\x3c/p>","*account=${ACCOUNT}, service_principal=${principal_name}","*${TF_PARAMETERS}","*Set Global Variable","*<p>Makes a variable available globally in all tests and suites.\x3c/p>","*Create Multiple Buckets","*<p>Create Buckets And Check That The AWS Infrastructure Match Specifications\x3c/p>","*Launch Terraform Deployment","*<p>Launch terraform deployment\x3c/p>\n<hr>\n<p>directory (str) : Deployment directory variables (str) : List of variables to add to the deployment in a tfvars file\x3c/p>","*/github/workspace/module/test/cases/../data/multiple, ${TF_PARAMETERS}","*Load Terraform States","*<p>Load terraform states from directory\x3c/p>\n<hr>\n<p>directory (str) : Deployment directory env       (str) : Retrieve only states from files .env.tfstate\x3c/p>","*/github/workspace/module/test/cases/../data/multiple","*${states}","*Load Multiple Test Data","*data","eNpTqS4uSSxJLY5WBxIl6rHR6vmlJQWlJcUgZrExiCxLzClNVY+t1VFQwac4Jz89PTMvHV1HkKu7p79fLQCjEiSY","*${specs}","*Buckets Shall Exist And Match","*<p>Check that a bucket exists that matches the specifications\x3c/p>\n<hr>\n<p>specs    (list) : List of specifications to consider\x3c/p>","*${specs['buckets']}, ${ACCOUNT}","*Destroy Terraform Deployment","*<p>Destroy terraform deployment\x3c/p>\n<hr>\n<p>directory (str) : Deployment directory variables (str) : List of variables to add to the deployment in a tfvars file\x3c/p>"]);
 </script>
 <script type="text/javascript">
-window.output["stats"] = [[{"elapsed":"00:01:23","fail":0,"label":"All Tests","pass":2,"skip":0}],[],[{"elapsed":"00:01:23","fail":0,"id":"s1","label":"Cases","name":"Cases","pass":2,"skip":0},{"elapsed":"00:01:23","fail":0,"id":"s1-s1","label":"Cases.Scenarii","name":"Scenarii","pass":2,"skip":0}]];
+window.output["stats"] = [[{"elapsed":"00:01:27","fail":0,"label":"All Tests","pass":2,"skip":0}],[],[{"elapsed":"00:01:27","fail":0,"id":"s1","label":"Cases","name":"Cases","pass":2,"skip":0},{"elapsed":"00:01:27","fail":0,"id":"s1-s1","label":"Cases.Scenarii","name":"Scenarii","pass":2,"skip":0}]];
 </script>
 <script type="text/javascript">
 window.output["errors"] = [];
 </script>
 <script type="text/javascript">
-window.output["baseMillis"] = 1647301679819;
+window.output["baseMillis"] = 1654264020225;
 </script>
 <script type="text/javascript">
-window.output["generated"] = 83417;
+window.output["generated"] = 87435;
 </script>
 <script type="text/javascript">
 window.output["expand_keywords"] = null;
@@ -2123,7 +2127,7 @@ function addExecutionLog(main) {
     <div class="element-header closed" onclick="toggleKeyword('${id}')">
       <div class="element-header-left" title="${type}  {{if name}}{{html fullName}}  {{/if}}[${status}]">
         <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label keyword ${status.toLowerCase()}">${type}</span>
+        <span class="label ${status.toLowerCase()}">${type}</span>
         <span>{{html assign}}</span>
         <span class="name"><span class="parent-name">{{html libname}}{{if libname}} . {{/if}}</span>{{html name}}</span>
         <span class="arg">{{html arguments}}</span>
@@ -2131,7 +2135,7 @@ function addExecutionLog(main) {
       <div class="element-header-right" onclick="stopPropagation(event)">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this keyword" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" title="Link to this item" href="#${id}" onclick="makeElementVisible('${id}')"></a>
       </div>
       <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
