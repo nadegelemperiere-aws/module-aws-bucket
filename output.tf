@@ -42,3 +42,7 @@ output "website_endpoint" {
 output "website_domain" {
     value = aws_s3_bucket.bucket.website_domain
 }
+
+output "key" {
+    value = aws_kms_key.bucket.arn
+}
