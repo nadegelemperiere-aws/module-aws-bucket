@@ -1,26 +1,20 @@
 # -------------------------------------------------------
-# TECHNOGIX
-# -------------------------------------------------------
-# Copyright (c) [2022] Technogix SARL
+# Copyright (c) [2022] Nadege Lemperiere
 # All rights reserved
 # -------------------------------------------------------
 # Module to deploy an aws s3 bucket with all the secure
 # components required
 # -------------------------------------------------------
 # Nadège LEMPERIERE, @12 november 2021
-# Latest revision: 12 november 2021
+# Latest revision: 19 november 2023
 # -------------------------------------------------------
-
-
-terraform {
-	experiments = [ module_variable_optional_attrs ]
-}
 
 # -------------------------------------------------------
 # Contact e-mail for this deployment
 # -------------------------------------------------------
 variable "email" {
 	type 	= string
+	nullable = false
 }
 
 # -------------------------------------------------------
@@ -28,9 +22,11 @@ variable "email" {
 # -------------------------------------------------------
 variable "environment" {
 	type 	= string
+	nullable = false
 }
 variable "region" {
 	type 	= string
+	nullable = false
 }
 
 # -------------------------------------------------------
@@ -38,9 +34,11 @@ variable "region" {
 # -------------------------------------------------------
 variable "project" {
 	type    = string
+	nullable = false
 }
 variable "module" {
 	type 	= string
+	nullable = false
 }
 
 # -------------------------------------------------------
@@ -49,6 +47,7 @@ variable "module" {
 variable "git_version" {
 	type    = string
 	default = "unmanaged"
+	nullable = false
 }
 
 # -------------------------------------------------------
@@ -56,6 +55,7 @@ variable "git_version" {
 # -------------------------------------------------------
 variable "name" {
 	type = string
+	nullable = false
 }
 
 # -------------------------------------------------------
@@ -64,6 +64,7 @@ variable "name" {
 variable "shall_log_access" {
 	type = bool
 	default = false
+	nullable = false
 }
 variable "logging_bucket" {
 	type = string
@@ -116,9 +117,11 @@ variable "rights" {
 }
 variable "service_principal" {
 	type = string
+	nullable = false
 }
 variable "account" {
 	type = string
+	nullable = false
 }
 
 # --------------------------------------------------------
@@ -127,4 +130,5 @@ variable "account" {
 variable "private" {
 	type 	= bool
 	default = true
+	nullable = false
 }

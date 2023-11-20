@@ -1,7 +1,5 @@
 # -------------------------------------------------------
-# TECHNOGIX
-# -------------------------------------------------------
-# Copyright (c) [2022] Technogix SARL
+# Copyright (c) [2022] Nadege Lemperiere
 # All rights reserved
 # -------------------------------------------------------
 # Keywords to create data for module test
@@ -67,7 +65,7 @@ def load_multiple_test_data(buckets, logging, region) :
             'Transitions' : [{'Days' : 30, 'StorageClass' : 'STANDARD_IA'}, {'Days' : 60, 'StorageClass' : 'GLACIER'}],
             'Expiration' : {'Days' : 90}})
 
-        bucket['Policy'] = {"Version":"2012-10-17","Statement":[{"Sid":"AllowRootAndServicePrincipal","Effect":"Allow","Principal":{"AWS":["arn:aws:iam::833168553325:user/principal","arn:aws:iam::833168553325:root"]},"Action":"s3:*","Resource":["arn:aws:s3:::test-test-eu-west-1-test-" + str(i) + "/*","arn:aws:s3:::test-test-eu-west-1-test-" + str(i)]},{"Sid": "AllowSSLRequestsOnly", "Effect": "Deny", "Principal": "*", "Action": "s3:*", "Resource": ["arn:aws:s3:::test-test-eu-west-1-test-" + str(i) + "/*", "arn:aws:s3:::test-test-eu-west-1-test-" + str(i)], "Condition": {"Bool": {"aws:SecureTransport": "false"}}}]}
+        bucket['Policy'] = {"Version":"2012-10-17","Statement":[{"Sid":"DenyUnEncryptedObjectUploads", "Effect":"Deny", "Action":"s3:PutObject","NotPrincipal":{"Service" : [ "cloudtrail.amazonaws.com", "delivery.logs.amazonaws.com", "s3.amazonaws.com", "config.amazonaws.com"]},"Resource":"arn:aws:s3:::test-test-eu-west-1-test-" + str(i) + "/*","Condition":{"Null":{ "s3:x-amz-server-side-encryption":"true" }}},{"Sid":"AllowRootAndServicePrincipal","Effect":"Allow","Principal":{"AWS":["arn:aws:iam::833168553325:user/principal","arn:aws:iam::833168553325:root"]},"Action":"s3:*","Resource":["arn:aws:s3:::test-test-eu-west-1-test-" + str(i) + "/*","arn:aws:s3:::test-test-eu-west-1-test-" + str(i)]},{"Sid": "AllowSSLRequestsOnly", "Effect": "Deny", "NotPrincipal":{"Service" : [ "cloudtrail.amazonaws.com", "delivery.logs.amazonaws.com", "s3.amazonaws.com", "config.amazonaws.com"]}, "Action": "s3:*", "Resource": ["arn:aws:s3:::test-test-eu-west-1-test-" + str(i) + "/*", "arn:aws:s3:::test-test-eu-west-1-test-" + str(i)], "Condition": {"Bool": {"aws:SecureTransport": "false"}}}]}
 
         if i == 5 :
             bucket['Policy']['Statement'].append({"Sid":"AllowLoggingService","Effect":"Allow","Principal":{"Service":"delivery.logs.amazonaws.com"},"Action":"s3:PutObject","Resource":"arn:aws:s3:::test-test-eu-west-1-test-5/*"})

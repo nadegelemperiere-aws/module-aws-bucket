@@ -2,7 +2,7 @@
    :alt: Logo
 
 ==========================
-Technogix s3 bucket module
+s3 bucket terraform module
 ==========================
 
 About The Project
@@ -10,26 +10,26 @@ About The Project
 
 This project contains all the infrastructure as code (IaC) to deploy a s3 bucket in AWS
 
-.. image:: https://badgen.net/github/checks/technogix-terraform/module-aws-bucket
-   :target: https://github.com/technogix-terraform/module-aws-bucket/actions/workflows/release.yml
+.. image:: https://badgen.net/github/checks/nadegelemperiere-aws/module-aws-bucket
+   :target: https://github.com/nadegelemperiere-aws/module-aws-bucket/actions/workflows/release.yml
    :alt: Status
 .. image:: https://img.shields.io/static/v1?label=license&message=MIT&color=informational
    :target: ./LICENSE
    :alt: License
-.. image:: https://badgen.net/github/commits/technogix-terraform/module-aws-bucket/main
-   :target: https://github.com/technogix-terraform/robotframework
+.. image:: https://badgen.net/github/commits/nadegelemperiere-aws/module-aws-bucket/main
+   :target: https://github.com/nadegelemperiere-aws/module-aws-bucket
    :alt: Commits
-.. image:: https://badgen.net/github/last-commit/technogix-terraform/module-aws-bucket/main
-   :target: https://github.com/technogix-terraform/robotframework
+.. image:: https://badgen.net/github/last-commit/nadegelemperiere-aws/module-aws-bucket/main
+   :target: https://github.com/nadegelemperiere-aws/module-aws-bucket
    :alt: Last commit
 
 Built With
 ----------
 
-.. image:: https://img.shields.io/static/v1?label=terraform&message=1.1.7&color=informational
+.. image:: https://img.shields.io/static/v1?label=terraform&message=1.6.4&color=informational
    :target: https://www.terraform.io/docs/index.html
    :alt: Terraform
-.. image:: https://img.shields.io/static/v1?label=terraform%20AWS%20provider&message=4.4.0&color=informational
+.. image:: https://img.shields.io/static/v1?label=terraform%20AWS%20provider&message=5.26.0&color=informational
    :target: https://registry.terraform.io/providers/hashicorp/aws/latest/docs
    :alt: Terraform AWS provider
 
@@ -50,7 +50,7 @@ To use this module in a wider terraform deployment, add the module to a terrafor
 
     module "bucket" {
 
-        source            = "git::https://github.com/technogix-terraform/module-aws-bucket?ref=<this module version>"
+        source            = "git::https://github.com/nadegelemperiere-aws/module-aws-bucket?ref=<this module version>"
         project           = the project to which the bucket belongs to be used in naming and tags
         module            = the project module to which the bucket belongs to be used in naming and tags
         email             = the email of the person responsible for the bucket maintainance
@@ -126,6 +126,8 @@ Bucket policy enables by default :
 
 * The IAM user used to perform infrastructure deployment
 
+It also forces object to be encrypted before being put into the bucket
+
 to get full access to the repository, so that it can be fully managed by terraform. Additional rights are provided through module configuration
 
 Testing
@@ -134,16 +136,16 @@ Testing
 Tested With
 -----------
 
-.. image:: https://img.shields.io/static/v1?label=technogix_iac_keywords&message=v1.0.0&color=informational
-   :target: https://github.com/technogix-terraform/robotframework
-   :alt: Technogix iac keywords
-.. image:: https://img.shields.io/static/v1?label=python&message=3.10.2&color=informational
+.. image:: https://img.shields.io/static/v1?label=aws_iac_keywords&message=v1.5.0&color=informational
+   :target: https://github.com/nadegelemperiere-aws/robotframework
+   :alt: AWS iac keywords
+.. image:: https://img.shields.io/static/v1?label=python&message=3.12&color=informational
    :target: https://www.python.org
    :alt: Python
-.. image:: https://img.shields.io/static/v1?label=robotframework&message=4.1.3&color=informational
+.. image:: https://img.shields.io/static/v1?label=robotframework&message=6.1.1&color=informational
    :target: http://robotframework.org/
    :alt: Robotframework
-.. image:: https://img.shields.io/static/v1?label=boto3&message=1.21.7&color=informational
+.. image:: https://img.shields.io/static/v1?label=boto3&message=1.29.3&color=informational
    :target: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
    :alt: Boto3
 
@@ -154,9 +156,9 @@ Tests can be executed in an environment :
 
 * in which python and terraform has been installed, by executing the script `scripts/robot.sh`_, or
 
-* in which docker is available, by using the `technogix infrastructure image`_ in its latest version, which already contains python and terraform, by executing the script `scripts/test.sh`_
+* in which docker is available, by using the `aws infrastructure image`_ in its latest version, which already contains python and terraform, by executing the script `scripts/test.sh`_
 
-.. _`technogix infrastructure image`: https://github.com/technogix-images/terraform-python-awscli
+.. _`aws infrastructure image`: https://github.com/nadegelemperiere-docker/terraform-python-awscli
 .. _`scripts/robot.sh`: scripts/robot.sh
 .. _`scripts/test.sh`: scripts/test.sh
 
@@ -184,16 +186,16 @@ Results
 
 The test results for latest release are here_
 
-.. _here: https://technogix-terraform.github.io/module-aws-bucket/report.html
+.. _here: https://nadegelemperiere-aws.github.io/module-aws-bucket/report.html
 
 Issues
 ======
 
-.. image:: https://img.shields.io/github/issues/technogix-terraform/module-aws-bucket.svg
-   :target: https://github.com/technogix-terraform/module-aws-bucket/issues
+.. image:: https://img.shields.io/github/issues/nadegelemperiere-aws/module-aws-bucket.svg
+   :target: https://github.com/nadegelemperiere-aws/module-aws-bucket/issues
    :alt: Open issues
-.. image:: https://img.shields.io/github/issues-closed/technogix-terraform/module-aws-bucket.svg
-   :target: https://github.com/technogix-terraform/module-aws-bucket/issues
+.. image:: https://img.shields.io/github/issues-closed/nadegelemperiere-aws/module-aws-bucket.svg
+   :target: https://github.com/nadegelemperiere-aws/module-aws-bucket/issues
    :alt: Closed issues
 
 Roadmap
@@ -204,7 +206,7 @@ N.A.
 Contributing
 ============
 
-.. image:: https://contrib.rocks/image?repo=technogix-terraform/module-aws-bucket
+.. image:: https://contrib.rocks/image?repo=nadegelemperiere-aws/module-aws-bucket
    :alt: GitHub Contributors Image
 
 We welcome contributions, do not hesitate to contact us if you want to contribute.
@@ -217,11 +219,7 @@ This code is under MIT License.
 Contact
 =======
 
-Nadege LEMPERIERE - nadege.lemperiere@technogix.io
-
-Project Link: `https://github.com/technogix-terraform/module-aws-bucket`_
-
-.. _`https://github.com/technogix-terraform/module-aws-bucket`: https://github.com/technogix-terraform/module-aws-bucket
+Nadege Lemperiere - nadege.lemperiere@gmail.com
 
 Acknowledgments
 ===============
