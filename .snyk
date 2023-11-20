@@ -1,2 +1,26 @@
 version: v1.20.0
 ignore:
+  SNYK-CC-TF-74:
+    - 'test/data/multiple/main.tf > *':
+        reason: Credentials are retrieved from the vault and the tfvars file is only available in runners
+        expires: 2030-03-11T00:00:00.000Z
+        created: 2022-03-11T18:24:00.000Z
+  SNYK-CC-TF-127:
+    - 'main.tf > *':
+        reason: Bucket shall be able to be destroyed without MFA so that CI/CD can modify infrastructure
+        expires: 2030-03-11T00:00:00.000Z
+        created: 2022-03-11T18:24:00.000Z
+    - 'test/data/multiple/main.tf > *':
+        reason: Bucket is just for testing purpose and shall be able to be deleted on the spot
+        expires: 2030-03-11T00:00:00.000Z
+        created: 2022-03-11T18:24:00.000Z
+  SNYK-CC-TF-45:
+    - 'test/data/multiple/main.tf > *':
+        reason: Bucket access is not logged since it is the receiving bucket for access log
+        expires: 2030-03-11T00:00:00.000Z
+        created: 2022-03-11T18:24:00.000Z
+  SNYK-CC-TF-124:
+    - 'test/data/multiple/main.tf > *':
+        reason: Bucket is just for testing purpose and versions are not managed
+        expires: 2030-03-11T00:00:00.000Z
+        created: 2022-03-11T18:24:00.000Z
