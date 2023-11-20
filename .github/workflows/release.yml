@@ -1,13 +1,11 @@
 # -------------------------------------------------------
-# TECHNOGIX
-# -------------------------------------------------------
-# Copyright (c) [2022] Technogix SARL
+# Copyright (c) [2022] Nadege Lemperiere
 # All rights reserved
 # -------------------------------------------------------
 # Analysis pipeline for website
 # -------------------------------------------------------
 # Nadège LEMPERIERE, @01 march 2022
-# Latest revision: 01 march 2022
+# Latest revision: 19 november 2023
 # -------------------------------------------------------
 
 name: Module Release Pipeline
@@ -28,7 +26,7 @@ jobs:
               uses: actions/checkout@master
 
             - name: Linting code
-              uses: docker://technogix/terraform-python-awscli:v2.1.0
+              uses: docker://nadegelemperiere/terraform-python-awscli:v3.0.0
               with:
                 args: ./scripts/lint.sh
 
@@ -58,7 +56,7 @@ jobs:
             - name: Retrieving vault
               uses: actions/checkout@master
               with:
-                repository: technogix/vault
+                repository: nadegelemperiere/vault
                 path: vault
                 ref: v2.1.0
                 token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -66,7 +64,7 @@ jobs:
             - name: Launching tests
               env:
                 VAULT_KEY: ${{ secrets.VAULT_KEY }}
-              uses: docker://technogix/terraform-python-awscli:v2.1.0
+              uses: docker://nadegelemperiere-docker/terraform-python-awscli:v3.0.0
               with:
                 args: ./module/scripts/robot.sh -l WARN -d tests -k VAULT_KEY
 

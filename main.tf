@@ -1,7 +1,5 @@
 # -------------------------------------------------------
-# TECHNOGIX
-# -------------------------------------------------------
-# Copyright (c) [2022] Technogix SARL
+# Copyright (c) [2022] Nadege Lemperiere
 # All rights reserved
 # -------------------------------------------------------
 # Module to deploy an aws s3 bucket with all the secure

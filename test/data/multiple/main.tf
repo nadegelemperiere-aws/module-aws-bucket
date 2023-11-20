@@ -1,7 +1,5 @@
 # -------------------------------------------------------
-# TECHNOGIX
-# -------------------------------------------------------
-# Copyright (c) [2022] Technogix SARL
+# Copyright (c) [2022] Nadege Lemperiere
 # All rights reserved
 # -------------------------------------------------------
 # Simple deployment for testing
@@ -85,7 +83,7 @@ provider "aws" {
 }
 
 terraform {
-	required_version = ">=1.0.8"
+	required_version = ">=1.6.4"
 	backend "local"	{
 		path="terraform.tfstate"
 	}
