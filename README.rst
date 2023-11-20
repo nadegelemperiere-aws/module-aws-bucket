@@ -136,16 +136,16 @@ Testing
 Tested With
 -----------
 
-.. image:: https://img.shields.io/static/v1?label=technogix_iac_keywords&message=v1.4.0&color=informational
+.. image:: https://img.shields.io/static/v1?label=aws_iac_keywords&message=v1.5.0&color=informational
    :target: https://github.com/nadegelemperiere-aws/robotframework
-   :alt: Technogix iac keywords
-.. image:: https://img.shields.io/static/v1?label=python&message=3.10.5&color=informational
+   :alt: AWS iac keywords
+.. image:: https://img.shields.io/static/v1?label=python&message=3.12&color=informational
    :target: https://www.python.org
    :alt: Python
-.. image:: https://img.shields.io/static/v1?label=robotframework&message=5.0.1&color=informational
+.. image:: https://img.shields.io/static/v1?label=robotframework&message=6.1.1&color=informational
    :target: http://robotframework.org/
    :alt: Robotframework
-.. image:: https://img.shields.io/static/v1?label=boto3&message=1.24.1&color=informational
+.. image:: https://img.shields.io/static/v1?label=boto3&message=1.29.3&color=informational
    :target: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
    :alt: Boto3
 
@@ -156,9 +156,9 @@ Tests can be executed in an environment :
 
 * in which python and terraform has been installed, by executing the script `scripts/robot.sh`_, or
 
-* in which docker is available, by using the `technogix infrastructure image`_ in its latest version, which already contains python and terraform, by executing the script `scripts/test.sh`_
+* in which docker is available, by using the `aws infrastructure image`_ in its latest version, which already contains python and terraform, by executing the script `scripts/test.sh`_
 
-.. _`technogix infrastructure image`: https://github.com/technogix-images/terraform-python-awscli
+.. _`aws infrastructure image`: https://github.com/nadegelemperiere-docker/terraform-python-awscli
 .. _`scripts/robot.sh`: scripts/robot.sh
 .. _`scripts/test.sh`: scripts/test.sh
 
@@ -219,11 +219,7 @@ This code is under MIT License.
 Contact
 =======
 
-Technogix - contact.technogix@gmail.com
-
-Project Link: `https://github.com/nadegelemperiere-aws/module-aws-bucket`_
-
-.. _`https://github.com/nadegelemperiere-aws/module-aws-bucket`: https://github.com/nadegelemperiere-aws/module-aws-bucket
+Nadege Lemperiere - nadege.lemperiere@gmail.com
 
 Acknowledgments
 ===============
