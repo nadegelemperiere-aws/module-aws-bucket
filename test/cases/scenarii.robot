@@ -20,9 +20,9 @@ Library         OperatingSystem
 *** Variables ***
 ${KEEPASS_DATABASE}                 ${vault_database}
 ${KEEPASS_KEY_ENV}                  ${vault_key_env}
-${KEEPASS_PRINCIPAL_KEY_ENTRY}      /engineering-environment/aws/aws-principal-access-key
-${KEEPASS_ACCOUNT_ENTRY}            /engineering-environment/aws/aws-account
-${KEEPASS_PRINCIPAL_USERNAME}       /engineering-environment/aws/aws-principal-credentials
+${KEEPASS_PRINCIPAL_KEY_ENTRY}      /aws/aws-principal-access-key
+${KEEPASS_ACCOUNT_ENTRY}            /aws/aws-account
+${KEEPASS_PRINCIPAL_USERNAME}       /aws/aws-principal-credentials
 ${REGION}                           eu-west-1
 
 *** Test Cases ***

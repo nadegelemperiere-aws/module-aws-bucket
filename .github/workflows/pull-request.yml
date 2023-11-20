@@ -55,9 +55,9 @@ jobs:
             - name: Retrieving vault
               uses: actions/checkout@master
               with:
-                repository: nadegelemperiere/vault
+                repository: nadegelemperiere-aws/vault
                 path: vault
-                ref: v2.2.0
+                ref: v1.0.0
                 token: ${{ secrets.GH_ACCESS_TOKEN }}
 
             - name: Launching tests

@@ -77,7 +77,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket" {
 			status = "Enabled"
 
 			dynamic "transition" {
-				for_each = ((rule.value.transitions != null) ? "${rule.value.transitions}" : [])
+				for_each = ((rule.value.transitions != null) ? rule.value.transitions : [])
 				content {
 					days           = transition.value.days
 					storage_class  = transition.value.storage_class
@@ -85,14 +85,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket" {
 			}
 
 			dynamic "expiration" {
-				for_each = ((rule.value.expiration != null) ? ["${rule.value.expiration}"] : [])
+				for_each = ((rule.value.expiration != null) ? [rule.value.expiration] : [])
 				content {
 					days 	       = expiration.value.days
 				}
 			}
 
 			dynamic "noncurrent_version_transition" {
-				for_each = ((rule.value.noncurrent_version_transitions != null) ? "${rule.value.noncurrent_version_transitions}" : [])
+				for_each = ((rule.value.noncurrent_version_transitions != null) ? rule.value.noncurrent_version_transitions : [])
 				content {
 					noncurrent_days 		  = noncurrent_version_transition.value.days
 					newer_noncurrent_versions = noncurrent_version_transition.value.number
@@ -101,7 +101,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket" {
 			}
 
 			dynamic "noncurrent_version_expiration" {
-				for_each = ((rule.value.noncurrent_version_expiration != null) ? ["${rule.value.noncurrent_version_expiration}"] : [])
+				for_each = ((rule.value.noncurrent_version_expiration != null) ? [rule.value.noncurrent_version_expiration] : [])
 				content {
 					noncurrent_days 		  = noncurrent_version_expiration.value.days
 					newer_noncurrent_versions = noncurrent_version_expiration.value.number
@@ -130,13 +130,13 @@ resource "aws_s3_bucket_logging" "bucket" {
 # -------------------------------------------------------
 locals {
 	kms_statements = concat([
-		for i,right in ((var.rights != null) ? "${var.rights}" : []) :
+		for i,right in ((var.rights != null) ? var.rights : []) :
 		{
 			Sid 		= right.description
 			Effect 		= "Allow"
 			Principal 	= {
-				"AWS" 		: ((right.principal.aws != null) ? "${right.principal.aws}" : [])
-				"Service" 	: ((right.principal.services != null) ? "${right.principal.services}" : [])
+				"AWS" 		: ((right.principal.aws != null) ? right.principal.aws : [])
+				"Service" 	: ((right.principal.services != null) ? right.principal.services : [])
 			}
 			Action 		= ["kms:Decrypt","kms:GenerateDataKey"],
 			Resource	= ["*"]
@@ -167,7 +167,7 @@ resource "aws_kms_key" "bucket" {
 	enable_key_rotation			= true
   	policy						= jsonencode({
   		Version = "2012-10-17",
-  		Statement = "${local.kms_statements}"
+  		Statement = local.kms_statements
 	})
 
 	tags = {
@@ -185,16 +185,16 @@ resource "aws_kms_key" "bucket" {
 # -------------------------------------------------------
 locals {
 	s3_statements = concat([
-		for i,right in (("${var.rights}" != null) ? "${var.rights}" : []) :
+		for i,right in ((var.rights != null) ? var.rights : []) :
 		{
 			Sid 		= right.description
 			Effect 		= "Allow"
 			Principal 	= {
-				"AWS" 		: ((right.principal.aws != null) ? "${right.principal.aws}" : [])
-				"Service" 	: ((right.principal.services != null) ? "${right.principal.services}" : [])
+				"AWS" 		: ((right.principal.aws != null) ? right.principal.aws : [])
+				"Service" 	: ((right.principal.services != null) ? right.principal.services : [])
 			}
 			Action 		= right.actions
-			Resource 	= (right.content ? "${aws_s3_bucket.bucket.arn}/*" : "${aws_s3_bucket.bucket.arn}")
+			Resource 	= (right.content ? "${aws_s3_bucket.bucket.arn}/*" : aws_s3_bucket.bucket.arn)
 		}
 	],
 	[
@@ -205,7 +205,7 @@ locals {
 				"AWS" 		: ["arn:aws:iam::${var.account}:root", "arn:aws:iam::${var.account}:user/${var.service_principal}"]
 			}
 			Action 		= "s3:*"
-			Resource 	= ["${aws_s3_bucket.bucket.arn}/*","${aws_s3_bucket.bucket.arn}"]
+			Resource 	= ["${aws_s3_bucket.bucket.arn}/*",aws_s3_bucket.bucket.arn]
 		},
         {
 			Sid 		 = "AllowSSLRequestsOnly"
@@ -214,7 +214,7 @@ locals {
             NotPrincipal = {
 				"Service" : [ "cloudtrail.amazonaws.com", "delivery.logs.amazonaws.com", "s3.amazonaws.com", "config.amazonaws.com"]
 			}
-			Resource 	 = ["${aws_s3_bucket.bucket.arn}/*","${aws_s3_bucket.bucket.arn}"]
+			Resource 	 = ["${aws_s3_bucket.bucket.arn}/*",aws_s3_bucket.bucket.arn]
             Condition    = {
                 "Bool" : { "aws:SecureTransport": "false" }
             }
@@ -246,7 +246,7 @@ resource "aws_s3_bucket_policy" "bucket" {
 
   	policy = jsonencode({
     	Version = "2012-10-17"
-		Statement = "${local.s3_statements}"
+		Statement = local.s3_statements
 	})
 }
 
