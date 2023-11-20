@@ -11,9 +11,9 @@
 
 *** Settings ***
 Documentation   A test case to check multiple subnets creation using module
-Library         technogix_iac_keywords.terraform
-Library         technogix_iac_keywords.keepass
-Library         technogix_iac_keywords.s3
+Library         aws_iac_keywords.terraform
+Library         aws_iac_keywords.keepass
+Library         aws_iac_keywords.s3
 Library         ../keywords/data.py
 Library         OperatingSystem
 
