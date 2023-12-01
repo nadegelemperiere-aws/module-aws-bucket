@@ -32,7 +32,8 @@ locals {
 			}],
 			rights = [
 				{ description = "AllowLoggingService", actions = ["s3:PutObject"], principal = { services = ["delivery.logs.amazonaws.com"]}, content = true }
-			]
+			],
+			lock = 7
 		}
 	]
 }
@@ -66,6 +67,7 @@ module "buckets" {
 	service_principal 	= var.service_principal
 	account				= var.account
 	name 				= "${local.test_buckets[count.index].name}"
+	lock 				= lookup("${local.test_buckets[count.index]}", "lock", null)
 	shall_log_access    = lookup("${local.test_buckets[count.index]}", "shall_log", false)
 	logging_bucket 		= lookup("${local.test_buckets[count.index]}", "logging_bucket", null)
 	lifecycles			= lookup("${local.test_buckets[count.index]}", "lifecycles", null)

@@ -16,9 +16,7 @@ resource "aws_s3_bucket" "bucket" {
 
 	bucket = "${var.project}-${var.environment}-${var.region}-${var.name}"
 
-	object_lock_configuration {
-		object_lock_enabled = "Enabled"
-	}
+	object_lock_enabled = true
 
   	tags = {
 		Name           	= "${var.project}.${var.environment}.${var.module}.${var.region}.${var.name}.s3"
@@ -28,6 +26,21 @@ resource "aws_s3_bucket" "bucket" {
 		Version 		= var.git_version
 		Module  		= var.module
 	}
+}
+
+# -------------------------------------------------------
+# Create the s3 bucket lock configuration
+# -------------------------------------------------------
+resource "aws_s3_bucket_object_lock_configuration" "bucket" {
+
+	bucket = aws_s3_bucket.bucket.id
+
+  	rule {
+    	default_retention {
+     		mode = "COMPLIANCE"
+      		days = var.lock
+    	}
+  	}
 }
 
 # -------------------------------------------------------
@@ -234,8 +247,6 @@ locals {
 	])
 }
 
-
-
 # -------------------------------------------------------
 # Allow writing in s3 bucket for dedicated users and/or
 # services
@@ -248,6 +259,19 @@ resource "aws_s3_bucket_policy" "bucket" {
     	Version = "2012-10-17"
 		Statement = local.s3_statements
 	})
+}
+
+
+# -------------------------------------------------------
+# Manage object owners in bucket
+# -------------------------------------------------------
+resource "aws_s3_bucket_ownership_controls" "bucket" {
+
+	bucket = aws_s3_bucket.bucket.id
+
+  	rule {
+    	object_ownership = "BucketOwnerPreferred"
+  	}
 }
 
 # -------------------------------------------------------

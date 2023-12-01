@@ -70,6 +70,13 @@ def load_multiple_test_data(buckets, logging, region) :
         if i == 5 :
             bucket['Policy']['Statement'].append({"Sid":"AllowLoggingService","Effect":"Allow","Principal":{"Service":"delivery.logs.amazonaws.com"},"Action":"s3:PutObject","Resource":"arn:aws:s3:::test-test-eu-west-1-test-5/*"})
 
+        bucket['Lock'] = {"ObjectLockEnabled": "Enabled", "Rule": {"DefaultRetention": {"Mode": "COMPLIANCE", "Days": 5}}}
+
+        if i == 5 :
+            bucket['Lock']['Rule']['DefaultRetention']['Days'] = 7
+
+        bucket['Ownership'] = [{"ObjectOwnership": "BucketOwnerPreferred"}]
+
         result['buckets'].append({'name' : 'test-' + str(i), 'data' : bucket})
 
     logger.debug(dumps(result))
