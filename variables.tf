@@ -97,6 +97,11 @@ variable "lifecycles" {
 	}))
 	default = null
 }
+variable "lock" {
+	type = number
+	nullable = false
+	default = 5
+}
 
 
 # --------------------------------------------------------
