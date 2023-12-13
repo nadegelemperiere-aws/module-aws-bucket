@@ -6,7 +6,7 @@
 # components required
 # -------------------------------------------------------
 # Nadège LEMPERIERE, @12 november 2021
-# Latest revision: 12 november 2021
+# Latest revision: 13 december 2023
 # ------------------------------------------------------
 
 output "id" {
@@ -31,14 +31,6 @@ output "region_domain" {
 
 output "zone" {
     value = aws_s3_bucket.bucket.hosted_zone_id
-}
-
-output "website_endpoint" {
-    value = aws_s3_bucket.bucket.website_endpoint
-}
-
-output "website_domain" {
-    value = aws_s3_bucket.bucket.website_domain
 }
 
 output "key" {

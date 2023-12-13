@@ -5,7 +5,7 @@
 # Simple deployment for testing
 # -------------------------------------------------------
 # Nadège LEMPERIERE, @12 november 2021
-# Latest revision: 12 november 2021
+# Latest revision: 13 december 2023
 # -------------------------------------------------------
 
 
@@ -133,8 +133,6 @@ output "s3" {
 		domains 	= module.buckets.*.domain
 		rdomains 	= module.buckets.*.region_domain
 		zones		= module.buckets.*.zone
-		endpoints	= module.buckets.*.website_endpoint
-		wdomains	= module.buckets.*.website_domain
 	}
 }
 
