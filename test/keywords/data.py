@@ -59,9 +59,9 @@ def load_multiple_test_data(buckets, logging, region) :
 
         bucket['Rules'] = []
         if i == 3 : bucket['Rules'].append(
-            {'ID' : 'test-3', 'Prefix' : 'test-3', 'Status': 'Enabled' , 'Expiration' : {'Days' : 2}})
+            {'ID' : 'test-3', 'Filter' : { 'Prefix' : 'test-3' }, 'Status': 'Enabled' , 'Expiration' : {'Days' : 2}})
         if i == 4 or i == 5 : bucket['Rules'].append(
-            {'ID' : 'test-' + str(i), 'Prefix' : 'test-' + str(i), 'Status': 'Enabled',
+            {'ID' : 'test-' + str(i), 'Filter' : { 'Prefix' : 'test-' + str(i) }, 'Status': 'Enabled',
             'Transitions' : [{'Days' : 30, 'StorageClass' : 'STANDARD_IA'}, {'Days' : 60, 'StorageClass' : 'GLACIER'}],
             'Expiration' : {'Days' : 90}})
 
