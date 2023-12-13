@@ -86,7 +86,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket" {
 		content {
 
 			id      = rule.value.identifier
-			prefix  = rule.value.prefix
+			filter {
+				prefix  = rule.value.prefix
+			}
 			status = "Enabled"
 
 			dynamic "transition" {
